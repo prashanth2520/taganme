@@ -14,7 +14,7 @@ jobs:
 
       - name: Check server tag
         run: |
-          if [[ ${{ github.ref }} == 'refs/tags/${{ SERVER_TAG }}' ]]; then
+          if [[ ${{ github.ref }} == 'refs/tags/${{ secret.SERVER_TAG }}' ]]; then
             echo "::set-output name=deploy::true"
           else
             echo "::set-output name=deploy::false"
