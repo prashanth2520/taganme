@@ -1,0 +1,27 @@
+name: Auto Deploy
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Check server tag
+        run: |
+          if [[ ${{ github.ref }} == 'refs/tags/${{ SERVER_TAG }}' ]]; then
+            echo "::set-output name=deploy::true"
+          else
+            echo "::set-output name=deploy::false"
+          fi
+        id: check_tag
+
+      - name: Deploy to server
+        if: steps.check_tag.outputs.deploy == 'true'
+        run: |
+          # Add your deployment commands here
